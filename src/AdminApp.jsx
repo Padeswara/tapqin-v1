@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import defaultProfileData from './data/profile.json'
 import { AdminPage } from './pages/AdminPage'
 
@@ -49,12 +49,26 @@ export default function AdminApp() {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
   }
 
-  const handleSaveProfile = (newData) => {
+  const handleSaveProfile = async (newData) => {
     setProfile(newData)
+    
+    // 1. Save to browser LocalStorage (Instant local persistence)
     try {
       localStorage.setItem('tapqin_profile_data', JSON.stringify(newData))
     } catch (e) {
-      console.error(e)
+      console.error('LocalStorage write error:', e)
+    }
+
+    // 2. Automatically save directly to physical file `src/data/profile.json` on disk during dev
+    try {
+      await fetch('/api/save-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newData),
+      })
+    } catch (err) {
+      // In production static hosting, local disk write is not available
+      console.log('Local dev server write skipped:', err.message)
     }
   }
 

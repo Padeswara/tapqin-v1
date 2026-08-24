@@ -1,68 +1,38 @@
 {
-  "name": "Padeswara Bima",
-  "handle": "@padeswarabima",
-  "description": "Full-Stack Developer & UI/UX Designer crafting sleek digital experiences ✨",
+  "name": "Padeswaraa",
+  "handle": "Rittergeistworks",
+  "description": "Creative Front-End Developer | Blending visual design, smooth interactions, and modern code to build memorable web experiences.",
   "avatar": "",
-  "location": "Indonesia 🇮🇩",
-  "availableForWork": true,
-  "availabilityStatus": "Available for Work & Projects",
-  "availabilityMessage": "I am currently open for new projects, freelance consulting, and collaborative opportunities. Let's create something extraordinary!",
+  "location": "Indonesia",
+  "verified": true,
   "links": [
     {
-      "title": "Main Portfolio",
-      "subtitle": "Explore my projects & case studies",
-      "url": "https://example.com",
+      "title": "Personal Website",
+      "subtitle": "Coming Soon.",
+      "url": "https://rittergeistworks-comingsoon.vercel.app/",
       "icon": "portfolio",
-      "category": "Work",
-      "badge": "Featured",
-      "thumbnail": "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600&auto=format&fit=crop&q=80"
-    },
-    {
-      "title": "GitHub",
-      "subtitle": "Open source & code repositories",
-      "url": "https://github.com",
-      "icon": "github",
-      "category": "Code",
-      "thumbnail": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=600&auto=format&fit=crop&q=80"
-    },
-    {
-      "title": "LinkedIn",
-      "subtitle": "Professional network & career",
-      "url": "https://linkedin.com",
-      "icon": "linkedin",
-      "category": "Work",
-      "thumbnail": "https://images.unsplash.com/photo-1616469829941-c7200edec809?w=600&auto=format&fit=crop&q=80"
+      "category": "Work"
     },
     {
       "title": "Instagram",
-      "subtitle": "Daily stories & creative gallery",
-      "url": "https://instagram.com",
+      "subtitle": "Coming Soon.",
+      "url": "https://www.instagram.com/rittergeistworks/",
       "icon": "instagram",
-      "category": "Social Media",
-      "thumbnail": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&auto=format&fit=crop&q=80"
+      "category": "Social Media"
     },
     {
-      "title": "Twitter / X",
-      "subtitle": "Tech thoughts, tips & insights",
-      "url": "https://x.com",
-      "icon": "x",
-      "category": "Social Media",
-      "thumbnail": "https://images.unsplash.com/photo-1611605698335-8b1569810432?w=600&auto=format&fit=crop&q=80"
+      "title": "GitHub",
+      "url": "https://github.com/Padeswara",
+      "icon": "github",
+      "category": "Code"
     },
     {
-      "title": "YouTube",
-      "subtitle": "Video tutorials & tech reviews",
-      "url": "https://youtube.com",
-      "icon": "youtube",
-      "category": "Social Media",
-      "thumbnail": "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=600&auto=format&fit=crop&q=80"
-    },
-    {
-      "title": "Email Me",
-      "subtitle": "Open for collaborations & inquiries",
-      "url": "mailto:hello@example.com",
-      "icon": "email",
-      "category": "Contact"
+      "title": "LinkedIn",
+      "url": "https://www.linkedin.com/in/padeswarabimata/",
+      "icon": "linkedin",
+      "category": "Work"
     }
-  ]
+  ],
+  "availableForWork": true,
+  "availabilityMessage": ""
 }

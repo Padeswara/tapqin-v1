@@ -23,6 +23,7 @@ import {
   RotateCcw,
   AlertTriangle,
   Camera,
+  Image as ImageIcon,
 } from 'lucide-react'
 
 const AVAILABLE_ICONS = [
@@ -155,7 +156,7 @@ export function AdminPage({ profileData, onSave, onNavigateToPublic, theme, onTo
 
         const optimizedDataUrl = canvas.toDataURL('image/jpeg', 0.88)
         handleProfileChange('avatar', optimizedDataUrl)
-        showToast('Profile photo uploaded! 📸')
+        showToast('Profile photo uploaded successfully!')
       }
       img.src = event.target.result
     }
@@ -193,7 +194,7 @@ export function AdminPage({ profileData, onSave, onNavigateToPublic, theme, onTo
 
         const optimizedDataUrl = canvas.toDataURL('image/jpeg', 0.85)
         setLinkForm((prev) => ({ ...prev, thumbnail: optimizedDataUrl }))
-        showToast('Link thumbnail uploaded! 🖼️')
+        showToast('Link thumbnail uploaded successfully!')
       }
       img.src = event.target.result
     }
@@ -322,7 +323,7 @@ export function AdminPage({ profileData, onSave, onNavigateToPublic, theme, onTo
   const handleExecuteSaveAll = () => {
     onSave(data)
     setShowSaveConfirmModal(false)
-    showToast('All changes saved to live website! ✨')
+    showToast('All changes saved to live website!')
   }
 
   // Exit Guard Handler: Triggered when clicking "View Public Page"
@@ -366,13 +367,13 @@ export function AdminPage({ profileData, onSave, onNavigateToPublic, theme, onTo
     a.download = 'profile.json'
     a.click()
     URL.revokeObjectURL(url)
-    showToast('profile.json downloaded! 📥')
+    showToast('profile.json downloaded successfully!')
   }
 
   const handleCopyJSON = () => {
     navigator.clipboard.writeText(JSON.stringify(data, null, 2))
     setCopiedJson(true)
-    showToast('JSON copied to clipboard! 📋')
+    showToast('JSON copied to clipboard!')
     setTimeout(() => setCopiedJson(false), 2000)
   }
 
@@ -759,8 +760,9 @@ export function AdminPage({ profileData, onSave, onNavigateToPublic, theme, onTo
                               </span>
                             )}
                             {link.thumbnail && (
-                              <span className="px-1.5 py-0.5 text-[9px] font-medium rounded-md bg-slate-200 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400">
-                                🖼️ Thumbnail
+                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[9px] font-medium rounded-md bg-slate-200 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400">
+                                <ImageIcon className="w-2.5 h-2.5" />
+                                <span>Thumbnail</span>
                               </span>
                             )}
                             {link.category && (
@@ -1329,9 +1331,10 @@ export function AdminPage({ profileData, onSave, onNavigateToPublic, theme, onTo
         </div>
       )}
 
-      {/* Toast Alert */}
+      {/* Toast Alert with Lucide Icon */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-2xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-xs font-semibold shadow-2xl flex items-center gap-2 animate-fade-in pointer-events-none">
+        <div className="fixed bottom-6 right-6 z-[60] px-4 py-2.5 rounded-2xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-xs font-semibold shadow-2xl flex items-center gap-2.5 animate-fade-in pointer-events-none border border-slate-800 dark:border-zinc-200">
+          <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
           <span>{toastMessage}</span>
         </div>
       )}

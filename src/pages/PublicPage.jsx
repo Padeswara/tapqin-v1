@@ -21,6 +21,7 @@ import {
   Mail,
   Sparkles,
   Check,
+  CheckCircle2,
 } from 'lucide-react'
 
 // Smart Thumbnail Resolver (Uses custom thumbnail or smart platform snapshot)
@@ -77,14 +78,6 @@ export function PublicPage({ profile, theme, onToggleTheme }) {
     return found?.url || ''
   }, [profile.links])
 
-  const handleCopyEmail = () => {
-    if (!emailAddress) return
-    navigator.clipboard.writeText(emailAddress)
-    setCopiedEmail(true)
-    showToast('Email copied to clipboard! 📋')
-    setTimeout(() => setCopiedEmail(false), 2000)
-  }
-
   const showToast = (msg) => {
     setToastMessage(msg)
     setTimeout(() => {
@@ -92,9 +85,17 @@ export function PublicPage({ profile, theme, onToggleTheme }) {
     }, 2200)
   }
 
+  const handleCopyEmail = () => {
+    if (!emailAddress) return
+    navigator.clipboard.writeText(emailAddress)
+    setCopiedEmail(true)
+    showToast('Email copied to clipboard!')
+    setTimeout(() => setCopiedEmail(false), 2000)
+  }
+
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href)
-    showToast('Link copied to clipboard! ✨')
+    showToast('Link copied to clipboard!')
   }
 
   const shareUrl = typeof window !== 'undefined' ? window.location.href : ''
@@ -614,9 +615,10 @@ export function PublicPage({ profile, theme, onToggleTheme }) {
           </div>
         )}
 
-        {/* Toast Alert */}
+        {/* Toast Alert with Lucide Icon */}
         {toastMessage && (
-          <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-40 px-4 py-2 rounded-full bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-xs font-semibold shadow-2xl flex items-center gap-2 animate-fade-in pointer-events-none">
+          <div className="fixed bottom-16 left-1/2 -translate-x-1/2 z-[60] px-4 py-2.5 rounded-full bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-xs font-semibold shadow-2xl flex items-center gap-2 animate-fade-in pointer-events-none border border-slate-800 dark:border-zinc-200">
+            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
             <span>{toastMessage}</span>
           </div>
         )}
