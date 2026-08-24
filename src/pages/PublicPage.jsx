@@ -409,15 +409,15 @@ export function PublicPage({ profile, theme, onToggleTheme }) {
           </button>
         </div>
 
-        {/* Share & QR Modal */}
+        {/* Share & QR Modal (Centered) */}
         {showShareModal && (
           <div
-            className="absolute inset-0 z-30 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4 transition-opacity duration-200"
+            className="absolute inset-0 z-30 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-200"
             onClick={() => setShowShareModal(false)}
           >
             <div
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-[360px] glass-container rounded-3xl p-5 border border-slate-200 dark:border-zinc-800 shadow-2xl relative space-y-4 animate-fade-in text-slate-900 dark:text-white"
+              className="w-full max-w-[360px] m-auto glass-container rounded-3xl p-5 border border-slate-200 dark:border-zinc-800 shadow-2xl relative space-y-4 animate-fade-in text-slate-900 dark:text-white"
             >
               {/* Modal Header */}
               <div className="flex items-center justify-between">
@@ -513,15 +513,15 @@ export function PublicPage({ profile, theme, onToggleTheme }) {
           </div>
         )}
 
-        {/* Work & Hire Inquiry Modal */}
+        {/* Work & Hire Inquiry Modal (Centered) */}
         {showHireModal && (
           <div
-            className="absolute inset-0 z-30 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4 transition-opacity duration-200"
+            className="absolute inset-0 z-30 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-200"
             onClick={() => setShowHireModal(false)}
           >
             <div
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-[380px] glass-container rounded-3xl p-5 border border-slate-200 dark:border-zinc-800 shadow-2xl relative space-y-4 animate-fade-in text-slate-900 dark:text-white"
+              className="w-full max-w-[380px] m-auto glass-container rounded-3xl p-5 border border-slate-200 dark:border-zinc-800 shadow-2xl relative space-y-4 animate-fade-in text-slate-900 dark:text-white"
             >
               {/* Modal Header */}
               <div className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 pb-3">

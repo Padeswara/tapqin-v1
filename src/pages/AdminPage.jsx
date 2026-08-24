@@ -901,7 +901,7 @@ export function AdminPage({ profileData, onSave, onNavigateToPublic, theme, onTo
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-xl bg-white dark:bg-[#121215] text-slate-900 dark:text-white rounded-3xl p-6 border border-slate-200 dark:border-zinc-800 shadow-2xl space-y-4 animate-fade-in"
+            className="w-full max-w-xl m-auto bg-white dark:bg-[#121215] text-slate-900 dark:text-white rounded-3xl p-6 border border-slate-200 dark:border-zinc-800 shadow-2xl space-y-4 animate-fade-in"
           >
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 pb-3">
               <div>
@@ -950,7 +950,7 @@ export function AdminPage({ profileData, onSave, onNavigateToPublic, theme, onTo
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-lg bg-white dark:bg-[#121215] text-slate-900 dark:text-white rounded-3xl p-6 border border-slate-200 dark:border-zinc-800 shadow-2xl space-y-4 animate-fade-in"
+            className="w-full max-w-lg m-auto bg-white dark:bg-[#121215] text-slate-900 dark:text-white rounded-3xl p-6 border border-slate-200 dark:border-zinc-800 shadow-2xl space-y-4 animate-fade-in"
           >
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 pb-3">
               <div className="flex items-center gap-2.5">
@@ -1196,7 +1196,7 @@ export function AdminPage({ profileData, onSave, onNavigateToPublic, theme, onTo
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-sm bg-white dark:bg-[#121215] text-slate-900 dark:text-white rounded-3xl p-6 border border-slate-200 dark:border-zinc-800 shadow-2xl space-y-4 animate-fade-in text-center"
+            className="w-full max-w-sm m-auto bg-white dark:bg-[#121215] text-slate-900 dark:text-white rounded-3xl p-6 border border-slate-200 dark:border-zinc-800 shadow-2xl space-y-4 animate-fade-in text-center"
           >
             <div className="w-14 h-14 mx-auto rounded-2xl bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20 flex items-center justify-center shadow-xs">
               <Trash2 className="w-7 h-7" />
@@ -1241,7 +1241,7 @@ export function AdminPage({ profileData, onSave, onNavigateToPublic, theme, onTo
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-sm bg-white dark:bg-[#121215] text-slate-900 dark:text-white rounded-3xl p-6 border border-slate-200 dark:border-zinc-800 shadow-2xl space-y-4 animate-fade-in text-center"
+            className="w-full max-w-sm m-auto bg-white dark:bg-[#121215] text-slate-900 dark:text-white rounded-3xl p-6 border border-slate-200 dark:border-zinc-800 shadow-2xl space-y-4 animate-fade-in text-center"
           >
             <div className="w-14 h-14 mx-auto rounded-2xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center justify-center shadow-xs">
               <Save className="w-7 h-7" />
@@ -1283,7 +1283,7 @@ export function AdminPage({ profileData, onSave, onNavigateToPublic, theme, onTo
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-sm bg-white dark:bg-[#121215] text-slate-900 dark:text-white rounded-3xl p-6 border border-slate-200 dark:border-zinc-800 shadow-2xl space-y-4 animate-fade-in text-center"
+            className="w-full max-w-sm m-auto bg-white dark:bg-[#121215] text-slate-900 dark:text-white rounded-3xl p-6 border border-slate-200 dark:border-zinc-800 shadow-2xl space-y-4 animate-fade-in text-center"
           >
             <div className="w-14 h-14 mx-auto rounded-2xl bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20 flex items-center justify-center shadow-xs">
               <AlertTriangle className="w-7 h-7" />
