@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import defaultProfileData from './data/profile.json'
 import { PublicPage } from './pages/PublicPage'
+import { getProfileFromSupabase, subscribeToProfileUpdates } from './lib/supabase'
 
 function App() {
   const [theme, setTheme] = useState(() => {
@@ -9,7 +10,7 @@ function App() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
   })
 
-  // Dynamic Profile Data (persisted in localStorage with fallback to profile.json)
+  // Dynamic Profile Data (Instant local render with fast Supabase sync)
   const [profile, setProfile] = useState(() => {
     try {
       const saved = localStorage.getItem('tapqin_profile_data')
@@ -20,7 +21,43 @@ function App() {
     return defaultProfileData
   })
 
-  // Listen for storage changes from CMS (/admin.html) across tabs/windows
+  // 1. Fetch latest profile data from Supabase on mount
+  useEffect(() => {
+    let isMounted = true
+
+    async function syncFromCloud() {
+      const cloudData = await getProfileFromSupabase()
+      if (cloudData && isMounted) {
+        setProfile(cloudData)
+        try {
+          localStorage.setItem('tapqin_profile_data', JSON.stringify(cloudData))
+        } catch (e) {
+          console.error(e)
+        }
+      }
+    }
+
+    syncFromCloud()
+
+    // 2. Realtime listener for instant live updates from CMS
+    const unsubscribe = subscribeToProfileUpdates((updatedData) => {
+      if (isMounted && updatedData) {
+        setProfile(updatedData)
+        try {
+          localStorage.setItem('tapqin_profile_data', JSON.stringify(updatedData))
+        } catch (e) {
+          console.error(e)
+        }
+      }
+    })
+
+    return () => {
+      isMounted = false
+      unsubscribe()
+    }
+  }, [])
+
+  // 3. Listen for storage changes from CMS across local tabs
   useEffect(() => {
     const handleStorageChange = (e) => {
       if (e.key === 'tapqin_profile_data' && e.newValue) {
