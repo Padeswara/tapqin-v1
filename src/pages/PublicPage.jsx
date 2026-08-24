@@ -256,7 +256,7 @@ export function PublicPage({ profile, theme, onToggleTheme }) {
                     style={{ animationDelay: `${index * 35}ms` }}
                     className="group relative flex flex-col w-full p-3 sm:p-3.5 rounded-2xl glass-card transition-all duration-200 animate-fade-in"
                   >
-                    {/* Header Row: Clickable to toggle thumbnail expansion */}
+                    {/* Main Link Info Row: Clickable to toggle thumbnail expansion */}
                     <div
                       onClick={() => setExpandedLinkIndex(isExpanded ? null : index)}
                       className="flex items-center gap-3 w-full cursor-pointer select-none"
@@ -293,37 +293,31 @@ export function PublicPage({ profile, theme, onToggleTheme }) {
                       </div>
                     </div>
 
-                    {/* Click-to-Expand Thumbnail Preview (No URL text overlay) */}
+                    {/* Full Expanded Thumbnail Preview (Positioned BELOW the Title Row) */}
                     {thumbnailSrc && (
                       <div
                         className={`w-full transition-all duration-300 ease-out overflow-hidden ${
-                          isExpanded
-                            ? 'max-h-72 opacity-100 mt-3'
-                            : 'max-h-0 opacity-0'
+                          isExpanded ? 'max-h-80 opacity-100 mt-3' : 'max-h-0 opacity-0'
                         }`}
                       >
-                        <div className="rounded-2xl overflow-hidden bg-slate-100 dark:bg-zinc-900 border border-slate-200/80 dark:border-zinc-800 relative shadow-inner">
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            window.open(link.url, '_blank')
+                          }}
+                          className="w-full h-44 sm:h-52 rounded-xl overflow-hidden bg-slate-100 dark:bg-zinc-900 border border-slate-200/80 dark:border-zinc-800 relative cursor-pointer shadow-xs"
+                          title="Click image to open link"
+                        >
                           <img
                             src={thumbnailSrc}
-                            alt={`${link.title} preview`}
-                            className="w-full h-36 sm:h-44 object-cover"
+                            alt={link.title}
+                            className="w-full h-full object-cover"
                             loading="lazy"
                           />
-                          {/* Clean Action Bar (Without Link URL) */}
-                          <div className="p-2.5 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md border-t border-slate-200/60 dark:border-zinc-800 flex items-center justify-between">
-                            <span className="text-xs font-semibold text-slate-800 dark:text-white truncate">
-                              {link.title}
-                            </span>
-                            <a
-                              href={link.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              onClick={(e) => e.stopPropagation()}
-                              className="px-3.5 py-1.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs font-semibold flex items-center gap-1.5 shadow-xs cursor-pointer active:scale-95 transition-all shrink-0"
-                            >
-                              <span>Open Link</span>
-                              <ExternalLink className="w-3 h-3" />
-                            </a>
+                          {/* Static Compact Open Link Badge (No Hover Effect) */}
+                          <div className="absolute bottom-2 right-2 bg-black/75 backdrop-blur-md text-white text-[9px] sm:text-[10px] font-semibold px-2 py-0.5 rounded-md flex items-center gap-1 shadow-xs select-none">
+                            <span>Open Link</span>
+                            <ExternalLink className="w-2.5 h-2.5" />
                           </div>
                         </div>
                       </div>
@@ -332,12 +326,12 @@ export function PublicPage({ profile, theme, onToggleTheme }) {
                 )
               })}
 
-              {/* Branding Footer */}
-              <div className="pt-4 pb-1 text-center">
-                <span className="text-xs font-medium text-slate-400 dark:text-zinc-600 tracking-wider">
-                  Tapqin
-                </span>
-              </div>
+              {/* Branding & Copyright Footer */}
+              <footer className="pt-6 pb-2 text-center select-none">
+                <p className="text-[11px] font-medium text-slate-400 dark:text-zinc-500 tracking-tight">
+                  © 2026 Tapqin by Padeswaraa. All rights reserved.
+                </p>
+              </footer>
             </div>
           )}
         </main>
