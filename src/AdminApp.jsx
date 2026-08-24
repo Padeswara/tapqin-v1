@@ -13,14 +13,11 @@ export default function AdminApp() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
   })
 
-  // Auth state: check if admin is unlocked in this browser
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('tapqin_admin_auth') === 'true' || sessionStorage.getItem('tapqin_admin_auth') === 'true'
-  })
+  // Always require PIN on every refresh / restart (Session-only in-memory lock)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [pinInput, setPinInput] = useState('')
   const [pinError, setPinError] = useState(false)
   const [showPin, setShowPin] = useState(false)
-  const [rememberMe, setRememberMe] = useState(true)
 
   const [profile, setProfile] = useState(() => {
     try {
@@ -31,6 +28,12 @@ export default function AdminApp() {
     }
     return defaultProfileData
   })
+
+  // Clear any past saved auth tokens from storage on mount
+  useEffect(() => {
+    localStorage.removeItem('tapqin_admin_auth')
+    sessionStorage.removeItem('tapqin_admin_auth')
+  }, [])
 
   // Sync theme
   useEffect(() => {
@@ -88,11 +91,6 @@ export default function AdminApp() {
     if (pinInput.trim() === CONFIGURED_ADMIN_PIN.trim()) {
       setIsAuthenticated(true)
       setPinError(false)
-      if (rememberMe) {
-        localStorage.setItem('tapqin_admin_auth', 'true')
-      } else {
-        sessionStorage.setItem('tapqin_admin_auth', 'true')
-      }
     } else {
       setPinError(true)
       setPinInput('')
@@ -136,7 +134,7 @@ export default function AdminApp() {
     window.open('/', '_blank')
   }
 
-  // PIN LOCK SCREEN (If not authenticated)
+  // PIN LOCK SCREEN (Always shown on every refresh/restart)
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen w-full bg-slate-50 dark:bg-[#09090b] text-slate-900 dark:text-white flex items-center justify-center p-4">
@@ -149,7 +147,7 @@ export default function AdminApp() {
           <div className="space-y-1.5">
             <h2 className="text-lg font-bold tracking-tight">Tapqin Admin Portal</h2>
             <p className="text-xs text-slate-500 dark:text-zinc-400">
-              Enter your Admin PIN to access the CMS dashboard
+              Enter your 6-digit Admin PIN to unlock the CMS
             </p>
           </div>
 
@@ -192,26 +190,6 @@ export default function AdminApp() {
               )}
             </div>
 
-            <div className="flex items-center justify-between text-xs text-slate-500 dark:text-zinc-400 px-1">
-              <label className="flex items-center gap-2 cursor-pointer select-none">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="rounded border-slate-300 text-orange-500 focus:ring-orange-500 cursor-pointer"
-                />
-                <span>Remember me</span>
-              </label>
-
-              <button
-                type="button"
-                onClick={() => window.location.href = '/'}
-                className="hover:underline text-slate-600 dark:text-zinc-300"
-              >
-                Back to Website
-              </button>
-            </div>
-
             <button
               type="submit"
               className="w-full py-3 rounded-2xl bg-orange-500 hover:bg-orange-600 text-white text-xs font-semibold shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95"
@@ -219,11 +197,21 @@ export default function AdminApp() {
               <span>Unlock CMS Dashboard</span>
               <ArrowRight className="w-4 h-4" />
             </button>
+
+            <div>
+              <button
+                type="button"
+                onClick={() => window.location.href = '/'}
+                className="text-xs text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-white transition-colors hover:underline cursor-pointer"
+              >
+                ← Back to Main Website
+              </button>
+            </div>
           </form>
 
           <div className="pt-2 border-t border-slate-100 dark:border-zinc-800/80 flex items-center justify-center gap-1.5 text-[11px] text-slate-400 dark:text-zinc-500">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-            <span>Secured with Supabase Cloud & PIN Encryption</span>
+            <span>Secured Session Protection</span>
           </div>
         </div>
       </div>
