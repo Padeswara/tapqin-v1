@@ -17,6 +17,10 @@ import {
   ExternalLink,
   X,
   User,
+  Briefcase,
+  Mail,
+  Sparkles,
+  Check,
 } from 'lucide-react'
 
 // Smart Thumbnail Resolver (Uses custom thumbnail or smart platform snapshot)
@@ -56,9 +60,30 @@ const getLinkThumbnail = (link) => {
 export function PublicPage({ profile, theme, onToggleTheme }) {
   const [activeCategory, setActiveCategory] = useState('All')
   const [showShareModal, setShowShareModal] = useState(false)
+  const [showHireModal, setShowHireModal] = useState(false)
+  const [copiedEmail, setCopiedEmail] = useState(false)
   const [shareTab, setShareTab] = useState('link')
   const [toastMessage, setToastMessage] = useState(null)
   const [expandedLinkIndex, setExpandedLinkIndex] = useState(null)
+
+  const emailAddress = useMemo(() => {
+    const found = profile.links?.find((l) => l.icon === 'email' || l.url?.startsWith('mailto:'))
+    if (found) return found.url.replace(/^mailto:/, '').trim()
+    return ''
+  }, [profile.links])
+
+  const whatsappUrl = useMemo(() => {
+    const found = profile.links?.find((l) => l.icon === 'whatsapp' || l.url?.includes('wa.me') || l.url?.includes('whatsapp.com'))
+    return found?.url || ''
+  }, [profile.links])
+
+  const handleCopyEmail = () => {
+    if (!emailAddress) return
+    navigator.clipboard.writeText(emailAddress)
+    setCopiedEmail(true)
+    showToast('Email copied to clipboard! 📋')
+    setTimeout(() => setCopiedEmail(false), 2000)
+  }
 
   const showToast = (msg) => {
     setToastMessage(msg)
@@ -210,13 +235,33 @@ export function PublicPage({ profile, theme, onToggleTheme }) {
             </p>
           )}
 
-          {/* Location Badge */}
-          {profile.location && (
-            <div className="mt-3 inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full glass-pill text-xs font-medium text-slate-700 dark:text-zinc-300">
-              <MapPin className="w-3.5 h-3.5 text-slate-500 dark:text-zinc-400" />
-              <span>{profile.location}</span>
-            </div>
-          )}
+          {/* Location & Live Availability Badges */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-3">
+            {profile.location && (
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full glass-pill text-xs font-medium text-slate-700 dark:text-zinc-300">
+                <MapPin className="w-3.5 h-3.5 text-slate-500 dark:text-zinc-400" />
+                <span>{profile.location}</span>
+              </div>
+            )}
+
+            {/* Interactive Live Availability Pill */}
+            {profile.availableForWork && (
+              <button
+                type="button"
+                onClick={() => setShowHireModal(true)}
+                className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/50 border border-emerald-500/30 text-xs font-semibold text-emerald-700 dark:text-emerald-400 transition-all cursor-pointer group shadow-2xs active:scale-95"
+                title="Click to view work availability & contact"
+              >
+                <span className="relative flex h-2 w-2 shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span className="truncate max-w-[210px] text-[11px] sm:text-xs">
+                  {profile.availabilityStatus || 'Available for Work'}
+                </span>
+              </button>
+            )}
+          </div>
 
           {/* Category Filter Tabs (Centered) */}
           {categories.length > 1 && (
@@ -464,6 +509,107 @@ export function PublicPage({ profile, theme, onToggleTheme }) {
                   </p>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* Work & Hire Inquiry Modal */}
+        {showHireModal && (
+          <div
+            className="absolute inset-0 z-30 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4 transition-opacity duration-200"
+            onClick={() => setShowHireModal(false)}
+          >
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-[380px] glass-container rounded-3xl p-5 border border-slate-200 dark:border-zinc-800 shadow-2xl relative space-y-4 animate-fade-in text-slate-900 dark:text-white"
+            >
+              {/* Modal Header */}
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 pb-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                    <Briefcase className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white">
+                      Work & Hire
+                    </h3>
+                    <p className="text-[10px] text-slate-500 dark:text-zinc-400">
+                      Collaborate with {profile.name}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setShowHireModal(false)}
+                  className="p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-400 hover:text-slate-700 dark:hover:text-white transition-colors cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Status Banner */}
+              <div className="p-3.5 rounded-2xl bg-emerald-500/10 dark:bg-emerald-950/40 border border-emerald-500/25 space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                  <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">
+                    {profile.availabilityStatus || 'Available for New Opportunities'}
+                  </span>
+                </div>
+                <p className="text-xs text-slate-700 dark:text-zinc-300 leading-relaxed">
+                  {profile.availabilityMessage ||
+                    "I'm currently accepting new freelance projects, consulting, and full-time opportunities. Feel free to reach out!"}
+                </p>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="space-y-2 pt-1">
+                {emailAddress && (
+                  <>
+                    <a
+                      href={`mailto:${emailAddress}?subject=Project Collaboration with ${encodeURIComponent(profile.name)}`}
+                      className="w-full py-2.5 px-4 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs font-semibold shadow-xs flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95"
+                    >
+                      <Mail className="w-4 h-4" />
+                      <span>Send Direct Email</span>
+                    </a>
+
+                    <button
+                      onClick={handleCopyEmail}
+                      className="w-full py-2.5 px-4 rounded-xl glass-pill hover:bg-slate-200/70 dark:hover:bg-zinc-800 text-xs font-semibold text-slate-800 dark:text-zinc-200 flex items-center justify-between cursor-pointer transition-all active:scale-95 font-mono"
+                    >
+                      <span className="truncate text-[11px]">{emailAddress}</span>
+                      <span className="flex items-center gap-1 text-[11px] font-sans text-orange-600 dark:text-orange-400 font-semibold shrink-0">
+                        {copiedEmail ? (
+                          <>
+                            <Check className="w-3.5 h-3.5 text-emerald-500" />
+                            <span>Copied!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5" />
+                            <span>Copy Email</span>
+                          </>
+                        )}
+                      </span>
+                    </button>
+                  </>
+                )}
+
+                {whatsappUrl && (
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-2.5 px-4 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95"
+                  >
+                    <FaWhatsapp className="w-4 h-4" />
+                    <span>Chat on WhatsApp</span>
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         )}

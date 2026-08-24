@@ -643,6 +643,64 @@ export function AdminPage({ profileData, onSave, onNavigateToPublic, theme, onTo
                     />
                   </div>
                 </div>
+
+                {/* LIVE AVAILABILITY / WORK STATUS SETTINGS */}
+                <div className="pt-3 border-t border-slate-100 dark:border-zinc-800/80 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        Live Availability Status (Work & Hire)
+                      </h4>
+                      <p className="text-[11px] text-slate-500 dark:text-zinc-400">
+                        Display a live pulsing badge on your profile showing you are open for work
+                      </p>
+                    </div>
+
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={!!data.availableForWork}
+                        onChange={(e) => handleProfileChange('availableForWork', e.target.checked)}
+                        className="sr-only peer"
+                      />
+                      <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-zinc-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-zinc-600 peer-checked:bg-emerald-500"></div>
+                    </label>
+                  </div>
+
+                  {data.availableForWork && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 animate-fade-in">
+                      <div>
+                        <label className="block text-[11px] font-semibold mb-1 text-slate-700 dark:text-zinc-300">
+                          Badge Status Text
+                        </label>
+                        <input
+                          type="text"
+                          value={data.availabilityStatus || ''}
+                          onChange={(e) => handleProfileChange('availabilityStatus', e.target.value)}
+                          className="w-full px-3.5 py-2 text-xs rounded-xl bg-slate-50 dark:bg-zinc-900/50 border border-slate-300 dark:border-zinc-800 focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                          placeholder="Available for Work & Projects"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-semibold mb-1 text-slate-700 dark:text-zinc-300">
+                          Inquiry Note / Collaboration Message
+                        </label>
+                        <input
+                          type="text"
+                          value={data.availabilityMessage || ''}
+                          onChange={(e) => handleProfileChange('availabilityMessage', e.target.value)}
+                          className="w-full px-3.5 py-2 text-xs rounded-xl bg-slate-50 dark:bg-zinc-900/50 border border-slate-300 dark:border-zinc-800 focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                          placeholder="Open for new projects & consulting..."
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* SECTION 2: ADD NEW LINK (+ BUTTON TRIGGER) */}
