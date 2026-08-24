@@ -409,10 +409,10 @@ export function PublicPage({ profile, theme, onToggleTheme }) {
           </button>
         </div>
 
-        {/* Share & QR Modal (Centered) */}
+        {/* Share & QR Modal (Fixed Viewport Centered for iOS & Desktop) */}
         {showShareModal && (
           <div
-            className="absolute inset-0 z-30 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-200"
+            className="fixed inset-0 z-50 bg-black/65 backdrop-blur-sm flex items-center justify-center p-4 overscroll-contain transition-opacity duration-200"
             onClick={() => setShowShareModal(false)}
           >
             <div
@@ -513,10 +513,10 @@ export function PublicPage({ profile, theme, onToggleTheme }) {
           </div>
         )}
 
-        {/* Work & Hire Inquiry Modal (Centered) */}
+        {/* Work & Hire Inquiry Modal (Fixed Viewport Centered for iOS & Desktop) */}
         {showHireModal && (
           <div
-            className="absolute inset-0 z-30 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-200"
+            className="fixed inset-0 z-50 bg-black/65 backdrop-blur-sm flex items-center justify-center p-4 overscroll-contain transition-opacity duration-200"
             onClick={() => setShowHireModal(false)}
           >
             <div
